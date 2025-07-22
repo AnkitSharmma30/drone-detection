@@ -1,8 +1,8 @@
 Flask
 Flask-Cors
-streamlit
 ultralytics
 numpy
 Pillow
 opencv-python-headless
-pyopenssl
+gunicorn
+cryptography
