@@ -1,6 +1,7 @@
 Flask
 Flask-Cors
-opencv-python-headless
+streamlit
 ultralytics
 numpy
 Pillow
+opencv-python-headless
