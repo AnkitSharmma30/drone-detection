@@ -5,11 +5,29 @@ import numpy as np
 import base64
 import io
 from PIL import Image
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-model = YOLO('yolov8n.pt')
+# Load model with error handling
+try:
+    if os.path.exists('yolov8n.pt') and os.path.getsize('yolov8n.pt') > 1000:
+        model = YOLO('yolov8n.pt')
+        print("✅ YOLOv8 model loaded successfully!")
+    else:
+        print("⚠️ Model file not found or invalid, downloading...")
+        model = YOLO('yolov8n.pt')
+        print("✅ YOLOv8 model downloaded and loaded!")
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
+    model = None
+
+
+# Health check route for Render
+@app.route('/health')
+def health():
+    return jsonify({"status": "healthy", "model_loaded": model is not None})
 
 
 # Serve the frontend UI
@@ -225,6 +243,14 @@ def index():
 
 @app.route('/detect', methods=['POST'])
 def detect():
+    if model is None:
+        return jsonify({
+            "error": "Model not loaded. Please try again later.",
+            "drone_detected": False,
+            "confidence": 0.0,
+            "detected_labels": []
+        }), 503
+
     data = request.json
     print('Received data:', data)
     if not data or 'image' not in data:
@@ -290,6 +316,6 @@ def detect():
 
 if __name__ == '__main__':
     import os
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get("PORT", 10000))
     print(f"🌐 Starting Flask app on port {port}...")
     app.run(debug=False, port=port, host='0.0.0.0')
