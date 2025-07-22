@@ -9,9 +9,7 @@ from PIL import Image
 app = Flask(__name__)
 CORS(app)
 
-# You need to download the yolov8n.pt model file for this to work.
-# Or replace it with a model trained specifically on drones for better accuracy.
-model = YOLO('yolov8n.pt') 
+model = YOLO('yolov8n.pt')
 
 @app.route('/detect', methods=['POST'])
 def detect():
