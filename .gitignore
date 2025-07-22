@@ -1,0 +1,28 @@
+# Python virtual environment
+venv/
+env/
+.env
+
+# PyTorch and CV2 binaries
+*.pyd
+*.dll
+*.lib
+
+# Python cache
+*.pyc
+__pycache__/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
