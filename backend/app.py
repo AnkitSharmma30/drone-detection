@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import cv2
 from ultralytics import YOLO
 import numpy as np
 import base64
